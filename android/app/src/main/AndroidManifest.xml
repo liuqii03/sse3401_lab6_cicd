@@ -32,6 +32,6 @@
         <!-- Instrumentation for test runner -->
         <instrumentation
             android:name="androidx.test.runner.AndroidJUnitRunner"
-            android:targetPackage="com.example.yourapp" />
+            android:targetPackage="com.example.assignment" />
     </application>
 </manifest>
