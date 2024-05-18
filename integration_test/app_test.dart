@@ -41,13 +41,13 @@ void main() {
         final factoryListButtonFinder = find.byType(FactoryListButton);
 
         await tester.tap(factoryListButtonFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
         //Engineer Page
         await tester.tap(find.byIcon(Icons.person));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
         await tester.tap(find.byIcon(Icons.add));
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
         //Invitation Page
         final ownerNameTextFieldFinder = find.byType(TextField).first;
@@ -56,14 +56,14 @@ void main() {
 
         await tester.tap(ownerNameTextFieldFinder);
         await tester.enterText(ownerNameTextFieldFinder, 'John');
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
         await tester.tap(ownerPhoneTextFieldFinder);
         await tester.enterText(ownerPhoneTextFieldFinder, '123456789');
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
         await tester.tap(submitButtonFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
       },
     );
   });
