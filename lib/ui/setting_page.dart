@@ -1,9 +1,9 @@
-import 'package:assignment/widgets/theme_bottom_navigation_bar.dart';
-import 'package:assignment/widgets/theme_button.dart';
 import 'package:flutter/material.dart';
 import '../data.dart';
 import '../model/factory_model.dart';
 import '../widgets/factory_list_button.dart';
+import '../widgets/theme_bottom_navigation_bar.dart';
+import '../widgets/theme_button.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -27,7 +27,6 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
-
     selectedFactory = factoryList.first;
     setMinimumThreshold();
   }
@@ -46,11 +45,34 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ),
         centerTitle: true,
-        actions: const [
-          Padding(
+        actions: [
+          // Settings Icon to trigger edit mode
+          IconButton(
+            icon: Icon(isEditable ? Icons.done : Icons.edit),
+            onPressed: () {
+              if (isEditable) {
+                // Save the data
+                setState(() {
+                  selectedFactory.minIndex.steamPressure =
+                      double.parse(_steamPressureController.text);
+                  selectedFactory.minIndex.steamFlow =
+                      double.parse(_steamFlowController.text);
+                  selectedFactory.minIndex.waterLevel =
+                      double.parse(_waterLevelController.text);
+                  selectedFactory.minIndex.powerFrequency =
+                      double.parse(_powerFrequencyController.text);
+                });
+              }
+              // Toggle edit mode
+              setState(() {
+                isEditable = !isEditable;
+              });
+            },
+          ),
+          const Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.settings),
-          )
+          ),
         ],
       ),
       body: Container(
@@ -61,9 +83,7 @@ class _SettingPageState extends State<SettingPage> {
             Expanded(
               flex: 6,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width * 0.01,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: width * 0.01),
                 child: _buildMinimumThresholdForm(),
               ),
             ),
@@ -80,9 +100,7 @@ class _SettingPageState extends State<SettingPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const ThemeBottomNavigationBar(
-        currentIndex: 2,
-      ),
+      bottomNavigationBar: const ThemeBottomNavigationBar(currentIndex: 2),
     );
   }
 
@@ -94,9 +112,7 @@ class _SettingPageState extends State<SettingPage> {
       color: Colors.grey.shade100,
       child: Container(
         margin: EdgeInsets.symmetric(
-          horizontal: width * 0.03,
-          vertical: height * 0.02,
-        ),
+            horizontal: width * 0.03, vertical: height * 0.02),
         width: width,
         child: Column(
           children: [
@@ -147,9 +163,7 @@ class _SettingPageState extends State<SettingPage> {
                 )
               ],
             ),
-            SizedBox(
-              height: height * 0.02,
-            ),
+            SizedBox(height: height * 0.02),
             Wrap(
               runSpacing: height * 0.05,
               children: [
@@ -194,9 +208,7 @@ class _SettingPageState extends State<SettingPage> {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(
-              bottom: 8,
-            ),
+            padding: const EdgeInsets.only(bottom: 8),
             width: width * 0.25,
             child: Text(
               title,
@@ -213,16 +225,11 @@ class _SettingPageState extends State<SettingPage> {
               Container(
                 width: width * 0.21,
                 height: height * 0.07,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(8),
-                  ),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
+                  borderRadius:
+                      const BorderRadius.horizontal(left: Radius.circular(8)),
+                  border: Border.all(color: Colors.grey),
                 ),
                 child: Center(
                   child: TextField(
@@ -243,16 +250,11 @@ class _SettingPageState extends State<SettingPage> {
               ),
               Container(
                 height: height * 0.07,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 2,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.horizontal(
-                    right: Radius.circular(8),
-                  ),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
+                  borderRadius:
+                      const BorderRadius.horizontal(right: Radius.circular(8)),
+                  border: Border.all(color: Colors.grey),
                 ),
                 child: Center(
                   child: Text(
@@ -271,7 +273,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  setMinimumThreshold() {
+  void setMinimumThreshold() {
     setState(() {
       _steamPressureController.text =
           selectedFactory.minIndex.steamPressure.toStringAsFixed(0);

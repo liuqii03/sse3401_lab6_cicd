@@ -20,27 +20,32 @@ void main() {
         await tester.pumpAndSettle();
 
         //Activation Page
-        final mobileNumberInputFinder = find.byType(TextField);
+        final mobileNumberField = find.byType(TextField);
         final otpInputFinder = find.byType(TextField);
         final termsCheckboxFinder = find.byType(Checkbox);
         final getActivationCodeButtonFinder = find.text('Get Activation Code');
         final activateButtonFinder = find.text('Activate');
 
-        // Initial state
-        await tester.enterText(mobileNumberInputFinder, '147737087');
-        await tester.tap(termsCheckboxFinder);
-        await tester.tap(getActivationCodeButtonFinder);
-        await tester.pumpAndSettle();
+        await tester.enterText(mobileNumberField, '147737087');
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
-        // Next step state
+        await tester.tap(termsCheckboxFinder);
+        await tester.pumpAndSettle(const Duration(seconds: 2));
+
+        await tester.tap(getActivationCodeButtonFinder);
+        await tester.pumpAndSettle(const Duration(seconds: 2));
+
         await tester.enterText(otpInputFinder, '123456');
         await tester.tap(activateButtonFinder);
-        await tester.pumpAndSettle();
+        await tester.pumpAndSettle(const Duration(seconds: 2));
 
         //Home Page
         final factoryListButtonFinder = find.byType(FactoryListButton);
 
         await tester.tap(factoryListButtonFinder);
+        await tester.pumpAndSettle(const Duration(seconds: 2));
+
+        await tester.tap(find.text('Factory 2'));
         await tester.pumpAndSettle(const Duration(seconds: 2));
 
         //Engineer Page
